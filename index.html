@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterans Alliance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+    background-color: white;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+.navbar {
+    background-color: white;
+    width: 100%;
+    margin-bottom: -30px;
+    height: auto;
+    padding: 0;
+}
+.navbar img{
+    height: 70px;
+    margin: auto;
+}
+.header {
+    background-color: rgb(10, 33, 56);
+    height: 100px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px;
+}
+.header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+.quiz-container {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    font-size: 24px;
+}
+.quiz-step {
+    display: none;
+}
+.quiz-step.active {
+    display: block;
+}
+.quiz-button {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.btn-answer {
+    width: 100%;
+    margin: 5px 0;
+}
+.footer {
+    padding: 20px;
+    background-color: rgb(10, 33, 56);
+    color: #fff;
+    text-align: center;
+    margin-top: 40px;
+}
+.footer a {
+    color: rgb(157, 15, 15);
+    text-decoration: none;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+.container-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container-img img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.container-text {
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+}
+.container-text h2{
+    font-weight: bold;
+}
+
+.container-q{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.btn{
+    width: auto;
+    margin-right: 20px;
+    background-color: rgb(10, 33, 56);
+    color: white;
+    border: none;
+}
+
+.progress-container {
+height: 10px;
+background-color: #f3f3f3;
+border-radius: 5px;
+margin-bottom: 20px;
+width: 100%;
+margin-top: 10px;
+}
+
+.progress-bar {
+height: 100%;
+background-color: rgb(10, 33, 56);
+width: 0%;
+border-radius: 5px;
+transition: width 0.3s ease;
+}
+
+.quiz-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.quiz-button button {
+    width: auto;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.fa-arrow-left, .fa-arrow-right {
+    font-size: 1.5rem;
+}
+
+.btn-selected {
+    background-color: red !important;
+    color: white !important;
+}
+
+@media (min-width: 991px) {
+    *{
+        overflow-x: hidden;
+    }
+    .container-1 {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .container-img {
+        flex: 1;
+    }
+    .container-text {
+        flex: 1;
+        padding-left: 15px;
+        text-align: left;
+    }
+    
+
+}
+@media (max-width: 991px){
+    .container-q{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+		<img src="assets/img/veteran-alliance-02.webp" alt="Veteran Alliance Logo" href="index.html">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    
+
+    <div class="container quiz-container">
+        <div class="container-1">
+            <div class="container-img">
+                <img class="img-responsive" src="assets/img/vet-img.webp" alt="Veterans Image">
+            </div>
+            <div class="container-text">
+				<h2>New Initiative: Veterans Can Instantly Qualify for a Concealed Permit Online!</h2>
+                <p>Veterans with a DD214 can now quickly obtain a concealed permit online, bypassing lengthy processes.</p>
+                <p>Act fast before the initiative ends on the 31st. Join thousands who have already qualified!</p>
+                <p>Complete the quiz below to get started ⬇️</p>
+            </div>
+        </div>
+        <header class="header mt-5">
+            <h1>Concealed Carry Qualification</h1>
+        </header>
+		<div class="progress-container">
+			<div class="progress-bar" id="progressBar"></div>
+		</div>
+        <div id="quizContainer" class="mt-4">
+            <div class="quiz-step active" id="step1">
+                <h3>Question 1:</h3>
+                <p>What year did you enlist?</p>
+                <div class="container-q">
+                    <button class="btn btn-outline-primary btn-answer" data-answer="1943-1962" onclick="selectAnswer(1, 'answer1', '1943-1962')">1943-1962</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="1963-1982" onclick="selectAnswer(1, 'answer1', '1963-1982')">1963-1982</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="1983-2002" onclick="selectAnswer(1, 'answer1', '1983-2002')">1983-2002</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="2003-2022" onclick="selectAnswer(1, 'answer1', '2003-2022')">2003-2022</button>
+                </div>
+            </div>
+        
+            <div class="quiz-step" id="step2">
+                <h3>Question 2:</h3>
+                <p>What Branch Of The Military Did You Serve In?</p>
+                <div class="container-q">
+                    <button class="btn btn-outline-primary btn-answer" data-answer="The Army" onclick="selectAnswer(2, 'answer2', 'The Army')">The Army</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Marines" onclick="selectAnswer(2, 'answer2', 'Marines')">Marines</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Air Force" onclick="selectAnswer(2, 'answer2', 'Air Force')">Air Force</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Navy" onclick="selectAnswer(2, 'answer2', 'Navy')">Navy</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Coast Guard" onclick="selectAnswer(2, 'answer2', 'Coast Guard')">Coast Guard</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Space Force" onclick="selectAnswer(2, 'answer2', 'Space Force')">Space Force</button>
+                </div>
+            </div>
+        
+            <div class="quiz-step" id="step3">
+                <h3>Question 3:</h3>
+                <p>Do You Have Your DD214?</p>
+                <div class="container-q">
+                    <button class="btn btn-outline-primary btn-answer" data-answer="Yes" onclick="selectAnswer(3, 'answer3', 'Yes')">Yes</button>
+                    <button class="btn btn-outline-primary btn-answer" data-answer="No" onclick="selectAnswer(3, 'answer3', 'No')">No</button>
+                </div>
+            </div>
+        </div>
+        <div class="quiz-button">
+            <button id="backButton" class="btn btn-secondary" onclick="prevStep()" disabled>
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <button id="nextButton" class="btn btn-primary" onclick="handleNextClick()">
+                <i class="fa fa-arrow-right"></i>
+            </button>
+            <button id="confirmButton" class="btn btn-success" onclick="confirmSubmission()" style="display: none;">
+                Confirm
+            </button>
+        </div>
+        
+        
+        
+
+
+    </div>
+	<div class="footer">
+		<p class="small">Our Service may contain links to third-party web sites or services that are not owned or controlled by Inner Glow Insights.</p>
+		<p class="small">Inner Glow Insights has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Inner Glow Insights shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
+		<p class="small">We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.</p>
+		<p class="small"><a href="https://innerglowinsights.com/privacy-policy">Privacy Policy</a> | 
+        <a href="https://innerglowinsights.com/terms-and-conditions">Terms & Conditions</a></p>
+		<p class="small">Copyright © Inner Glow Insights.</p>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+let answers = {};
+const totalSteps = 3;
+let currentStep = 1; // Initialize currentStep
+
+// Function to select an answer and handle button states
+function selectAnswer(step, answerType, value) {
+    answers[answerType] = value;
+    updateAnswerButtons(step, answerType);
+    if (step < totalSteps) {
+        nextStep(step + 1);
+    } else {
+        showConfirmButton();
+    }
+}
+
+// Function to update button states based on the selected answer
+function updateAnswerButtons(step, answerType) {
+    const buttons = document.querySelectorAll(`#step${step} .btn-answer`);
+    buttons.forEach(button => {
+        button.classList.remove('btn-selected'); // Remove previous highlight
+        if (button.getAttribute('data-answer') === answers[answerType]) {
+            button.classList.add('btn-selected'); // Add highlight to selected answer
+        }
+    });
+}
+
+// Handle "Next" button click
+function handleNextClick() {
+    if (currentStep === totalSteps) {
+        showConfirmButton();
+    } else {
+        nextStep(currentStep + 1);
+    }
+}
+
+// Validate if all answers are provided
+function validateAllAnswers() {
+    return Object.keys(answers).length === totalSteps;
+}
+
+// Confirm submission of answers
+function confirmSubmission() {
+    if (validateAllAnswers()) {
+        window.location.href = 'offer.html' ;
+    } else {
+        alert('Please answer all questions before submitting.');
+    }
+}
+
+// Function to go to the next step
+function nextStep(step) {
+    if (step > totalSteps) {
+        finishQuiz();
+        return;
+    }
+    
+    // Hide current step
+    const currentStepElement = document.querySelector('.quiz-step.active');
+    if (currentStepElement) {
+        currentStepElement.classList.remove('active');
+    }
+
+    // Show next step
+    const nextStepElement = document.getElementById('step' + step);
+    if (nextStepElement) {
+        nextStepElement.classList.add('active');
+        currentStep = step;
+        updateProgress(step);
+        updateButtons();
+        updateAnswerButtons(step, 'answer' + step); // Highlight answers
+    }
+}
+
+// Function to go to the previous step
+function prevStep() {
+    const prevStep = currentStep - 1;
+    if (prevStep > 0) {
+        // Hide current step
+        const currentStepElement = document.querySelector('.quiz-step.active');
+        if (currentStepElement) {
+            currentStepElement.classList.remove('active');
+        }
+
+        // Show previous step
+        const prevStepElement = document.getElementById('step' + prevStep);
+        if (prevStepElement) {
+            prevStepElement.classList.add('active');
+            currentStep = prevStep;
+            updateProgress(prevStep);
+            updateButtons();
+            updateAnswerButtons(prevStep, 'answer' + prevStep); // Highlight answers
+        }
+    }
+}
+
+// Show the "Confirm" button
+function showConfirmButton() {
+    document.getElementById('nextButton').style.display = 'none';
+    document.getElementById('confirmButton').style.display = 'block';
+}
+
+// Update the state of navigation buttons
+function updateButtons() {
+    const backButton = document.getElementById('backButton');
+    const nextButton = document.getElementById('nextButton');
+    const confirmButton = document.getElementById('confirmButton');
+    
+    backButton.disabled = currentStep === 1;
+    nextButton.style.display = currentStep === totalSteps ? 'none' : 'block';
+    confirmButton.style.display = currentStep === totalSteps ? 'block' : 'none';
+}
+
+// Update the progress bar
+function updateProgress(currentStep) {
+    const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+    document.getElementById('progressBar').style.width = progressPercent + '%';
+}
+
+// Finish the quiz and show confirmation
+function finishQuiz() {
+    showConfirmButton();
+}
+
+// Optional: Display success message (for debugging or further use)
+function showSuccess() {
+    alert('Quiz Completed!'); 
+}
+
+
+
+
+    </script>
+
+</body>
+</html>
